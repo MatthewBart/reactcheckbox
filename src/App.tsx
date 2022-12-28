@@ -2,7 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
-function CheckBoxRow() {
+function CheckBoxRow( { user }:{user :string} ) {
   const [permissions,setPermissions] = useState({
     read:false,
     write:false,
@@ -28,11 +28,11 @@ function CheckBoxRow() {
   }
 
   return(
-    <div>
+    <>
+      User {user}
       <input type="checkbox" 
       checked={permissions.read}
       onChange={(i)=> handleRead(i.currentTarget.checked)}>
-
       </input>
       <input type="checkbox"
       checked={permissions.write}
@@ -41,15 +41,24 @@ function CheckBoxRow() {
       <input type="checkbox" 
       checked={permissions.delete}
       onChange={(i) => handleDelete(i.currentTarget.checked)}></input>
-     </div>
+  </>
   )
+
 }
 
 function App() {
 
   return (
     <div className="App">
-      <CheckBoxRow/>
+      <div className="table">
+        <span></span>
+        <span>Read </span>
+        <span>Write</span>
+        <span>Delete</span>
+        <CheckBoxRow user={"1"}/>
+        <CheckBoxRow user={"2"}/>
+        <CheckBoxRow user={"3"}/>
+      </div>
     </div>
   )
 }
