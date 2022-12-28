@@ -2,31 +2,54 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
+function CheckBoxRow() {
+  const [permissions,setPermissions] = useState({
+    read:false,
+    write:false,
+    delete:false,
+  });
+
+  const [deleteChecked,setDeleteChecked] = useState(false);
+  function handleDelete(isChecked:boolean){
+    setPermissions({read:isChecked,write:isChecked,delete:isChecked});
+    setDeleteChecked(isChecked);
+  }
+  function handleWrite(isChecked:boolean){
+    if(!deleteChecked){
+      setPermissions({...permissions,write:isChecked});
+    }
+    else{
+      setPermissions({...permissions,write:isChecked,delete:false});
+    }
+  }
+  function handleRead(isChecked:boolean){
+      setPermissions({...permissions,read:isChecked});   
+
+  }
+
+  return(
+    <div>
+      <input type="checkbox" 
+      checked={permissions.read}
+      onChange={(i)=> handleRead(i.currentTarget.checked)}>
+
+      </input>
+      <input type="checkbox"
+      checked={permissions.write}
+      onChange={(i) => handleWrite(i.currentTarget.checked)}      >
+      </input>
+      <input type="checkbox" 
+      checked={permissions.delete}
+      onChange={(i) => handleDelete(i.currentTarget.checked)}></input>
+     </div>
+  )
+}
+
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <CheckBoxRow/>
     </div>
   )
 }
